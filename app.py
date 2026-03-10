@@ -1,45 +1,74 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
+import time
 
-# إعدادات الصفحة
-st.set_page_config(page_title="DevOps Enterprise System", layout="wide")
+# إعدادات احترافية للصفحة
+st.set_page_config(page_title="SkyNet DevOps Dashboard", page_icon="🌐", layout="wide")
 
-# الهيدر
-st.title("🏢 نظام إدارة الموارد الذكي (Live Demo)")
-st.markdown("---")
+# تصميم الهيدر مع خلفية لونية (CSS بسيط)
+st.markdown("""
+    <style>
+    .main { background-color: #f5f7f9; }
+    .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    </style>
+    """, unsafe_allow_html=True)
 
-# القائمة الجانبية (Sidebar)
-st.sidebar.image("https://cdn-icons-png.flaticon.com/512/9438/9438069.png", width=100)
-st.sidebar.title("إعدادات النظام")
-status = st.sidebar.radio("حالة السيرفر:", ["تشغيل (Online)", "صيانة (Maintenance)"])
+# العنوان الرئيسي
+st.title("🌐 SkyNet Solutions | Global Operations Center")
+st.caption("نظام المراقبة والتحكم الموحد - مدعوم بتقنيات CI/CD")
 
-# الجزء الأول: بطاقات إحصائية (Metrics)
-col1, col2, col3 = st.columns(3)
-col1.metric("عدد المستخدمين", "1,250", "+12%")
-col2.metric("كفاءة النظام", "98.5%", "0.5%")
-col3.metric("الطلبات النشطة", "432", "-5%")
+# --- الصف الأول: مؤشرات حيوية ---
+st.markdown("### 📊 حالة الأنظمة العالمية")
+col1, col2, col3, col4 = st.columns(4)
 
-st.markdown("---")
+with col1:
+    st.metric(label="خوادم السحاب", value="🟢 142", delta="Online")
+with col2:
+    st.metric(label="نسبة استجابة الموقع", value="99.98%", delta="0.02% ↑")
+with col3:
+    st.metric(label="العمليات المنفذة اليوم", value="45,201", delta="1,200")
+with col4:
+    st.metric(label="وقت النشر التلقائي", value="1.4 min", delta="تحسن ملحوظ", delta_color="normal")
 
-# الجزء الثاني: رسم بياني تفاعلي
-st.subheader("📈 تحليل أداء العمليات (Real-time)")
-chart_data = pd.DataFrame(
-    np.random.randn(20, 3),
-    columns=['الإنتاج', 'المبيعات', 'الأرباح']
-)
-st.line_chart(chart_data)
+st.divider()
 
-# الجزء الثالث: إضافة بيانات يدوية (الشيء الملموس)
-st.subheader("✍️ تسجيل دخول موظف جديد")
-with st.form("employee_form"):
-    name = st.text_input("اسم الموظف:")
-    dept = st.selectbox("القسم:", ["IT", "HR", "DevOps", "Finance"])
-    date = st.date_input("تاريخ البدء:")
-    submit = st.form_submit_button("إضافة للملحقات")
+# --- الصف الثاني: مراقبة الـ Pipeline والبيانات ---
+left_column, right_column = st.columns([2, 1])
+
+with left_column:
+    st.subheader("🛠️ سجل الـ CI/CD Pipeline الأخير")
+    # جدول بيانات واقعي
+    df = pd.DataFrame({
+        'المرحلة': ['Build', 'Unit Test', 'Security Scan', 'Deploy to Production'],
+        'الحالة': ['✅ Successful', '✅ Passed', '✅ Secure', '⏳ Running...'],
+        'الوقت المستغرق': ['45s', '120s', '90s', '30s']
+    })
+    st.table(df)
     
-    if submit:
-        st.success(f"تم تسجيل {name} في قسم {dept} بنجاح عبر الـ Pipeline!")
+    # رسم بياني لحركة المرور (Traffic)
+    st.subheader("📈 مراقبة تدفق البيانات (Real-time Traffic)")
+    chart_data = pd.DataFrame(
+        [10, 25, 40, 35, 50, 70, 85, 80, 95, 110, 105, 120],
+        columns=['Users']
+    )
+    st.area_chart(chart_data)
+
+with right_column:
+    st.subheader("🚨 تنبيهات النظام")
+    st.warning("تنبيه: تحديث أمني مطلوب لـ Database Node 4")
+    st.error("خطأ: محاولة دخول غير مصرح بها من IP: 192.168.1.1 (تم الحظر)")
+    st.success("تم الانتهاء من النسخ الاحتياطي اليومي بنجاح")
+    
+    # تفاعل ملموس للحضور
+    st.subheader("⚙️ التحكم اليدوي")
+    if st.button("تحديث قاعدة البيانات الآن"):
+        with st.status("جاري التحديث...", expanded=True) as status:
+            st.write("فحص الاتصال...")
+            time.sleep(1)
+            st.write("مزامنة البيانات...")
+            time.sleep(1)
+            status.update(label="✅ اكتمل التحديث بنجاح!", state="complete", expanded=False)
 
 # تذييل الصفحة
-st.info(f"حالة النظام الحالية: {status} | تم النشر بواسطة GitHub Actions")
+st.markdown("---")
+st.markdown(f"**إصدار النظام:** v2.4.0-Stable | **المطور:** [اسمك هنا] | **تاريخ النشر:** {time.strftime('%Y-%m-%d %H:%M')}")
