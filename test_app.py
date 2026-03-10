@@ -1,6 +1,6 @@
 # اختبار بسيط للتأكد من أن البيئة تعمل
 def test_simple_check():
-    assert 1 + 1 ==3
+    assert 1 + 1 ==2
 
 def test_logic():
     expected = "Success"
