@@ -8,24 +8,22 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: 1. Source Stage (GitHub)
-      uses: actions/checkout@v4
+   steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: 2. Build Stage (Environment Setup)
-      run: |
-        echo "Setting up Python environment..."
-        python -m pip install --upgrade pip
-        pip install pytest
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python_version: '3.9'
 
-    - name: 3. Test Stage (Automated Testing)
-      run: |
-        echo "Running Unit Tests as per slide 33..."
-        pytest test_app.py
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest  # تأكد من تنصيب pytest أيضاً
 
-    - name: 4. Deploy Stage (AWS / Azure Simulation)
-      run: |
-        echo "Connecting to AWS CodePipeline..."
-        echo "Uploading artifacts to Amazon S3 Bucket..."
-        echo "Triggering Azure App Service Deployment..."
-        echo "DONE: Application is now LIVE on the Cloud!"
+      - name: Run Tests
+        run: |
+          echo "Running Unit Tests as per slide 33..."
+          pytest test_app.py
