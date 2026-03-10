@@ -1,29 +1,31 @@
-name: Professional-DevOps-Pipeline
+name: DevOps-CI-CD-Pipeline
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  build-and-test:
+  build_and_test:
     runs-on: ubuntu-latest
 
-   steps:
+    steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python_version: '3.9'
+          python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest  # تأكد من تنصيب pytest أيضاً
+          pip install streamlit pandas pytest
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Tests
+      - name: Run Unit Tests
         run: |
-          echo "Running Unit Tests as per slide 33..."
+          echo "Running Tests as per Slide 33..."
           pytest test_app.py
