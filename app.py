@@ -72,3 +72,6 @@ with right_column:
 # تذييل الصفحة
 st.markdown("---")
 st.sidebar.write(f"Last Commit ID: {time.strftime('%H:%M:%S')}")
+# أضف هذا السطر في القائمة الجانبية (Sidebar)
+st.sidebar.success(f"آخر تحديث للنظام: {time.strftime('%H:%M:%S')}")
+st.sidebar.write("نسخة النظام: **v2.1.0**")
