@@ -1,77 +1,65 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import time
+import random
 
-# إعدادات احترافية للصفحة
-st.set_page_config(page_title="SkyNet DevOps Dashboard", page_icon="🌐", layout="wide")
+# إعداد الصفحة
+st.set_page_config(page_title="Live DevOps Operations", layout="wide")
 
-# تصميم الهيدر مع خلفية لونية (CSS بسيط)
+# تصميم CSS لجعل الواجهة تبدو احترافية
 st.markdown("""
     <style>
-    .main { background-color: #f5f7f9; }
-    .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    .stMetric { border: 1px solid #e6e9ef; padding: 10px; border-radius: 5px; background: #fafafa; }
     </style>
     """, unsafe_allow_html=True)
 
-# العنوان الرئيسي
-st.title("🌐 SkyNet Solutions | Global Operations Center")
-st.caption("نظام المراقبة والتحكم الموحد - مدعوم بتقنيات CI/CD")
+st.title("📊 SkyNet Live Operations Dashboard")
+st.caption("بيانات حية يتم تحديثها تلقائياً من نظام الـ DevOps")
 
-# --- الصف الأول: مؤشرات حيوية ---
-st.markdown("### 📊 حالة الأنظمة العالمية")
+# --- الجزء الأول: الإشعارات اللحظية (Notifications) ---
+placeholder_alert = st.empty() # مكان مخصص للإشعارات المتغيرة
+
+# --- الجزء الثاني: المؤشرات الرقمية (The Metrics) ---
 col1, col2, col3, col4 = st.columns(4)
 
-with col1:
-    st.metric(label="خوادم السحاب", value="🟢 142", delta="Online")
-with col2:
-    st.metric(label="نسبة استجابة الموقع", value="99.98%", delta="0.02% ↑")
-with col3:
-    st.metric(label="العمليات المنفذة اليوم", value="45,201", delta="1,200")
-with col4:
-    st.metric(label="وقت النشر التلقائي", value="1.4 min", delta="تحسن ملحوظ", delta_color="normal")
+# --- الجزء الثالث: الرسم البياني المتحرك ---
+st.subheader("📈 تدفق البيانات المباشر (Network Traffic)")
+chart_placeholder = st.empty()
 
-st.divider()
+# محاكاة "قاعدة بيانات" للرسم البياني
+if 'data' not in st.session_state:
+    st.session_state.data = pd.DataFrame(np.random.randn(20, 1), columns=['Traffic'])
 
-# --- الصف الثاني: مراقبة الـ Pipeline والبيانات ---
-left_column, right_column = st.columns([2, 1])
-
-with left_column:
-    st.subheader("🛠️ سجل الـ CI/CD Pipeline الأخير")
-    # جدول بيانات واقعي
-    df = pd.DataFrame({
-        'المرحلة': ['Build', 'Unit Test', 'Security Scan', 'Deploy to Production'],
-        'الحالة': ['✅ Successful', '✅ Passed', '✅ Secure', '⏳ Running...'],
-        'الوقت المستغرق': ['45s', '120s', '90s', '30s']
-    })
-    st.table(df)
+# --- حلقة التحديث المستمر (The Live Loop) ---
+# هذه الحلقة تجعل الموقع يتحدث تلقائياً كل ثانيتين
+for i in range(100): # سيتحدث 100 مرة (يمكنك زيادتها)
     
-    # رسم بياني لحركة المرور (Traffic)
-    st.subheader("📈 مراقبة تدفق البيانات (Real-time Traffic)")
-    chart_data = pd.DataFrame(
-        [10, 25, 40, 35, 50, 70, 85, 80, 95, 110, 105, 120],
-        columns=['Users']
-    )
-    st.area_chart(chart_data)
-
-with right_column:
-    st.subheader("🚨 تنبيهات النظام")
-    st.warning("تنبيه: تحديث أمني مطلوب لـ Database Node 4")
-    st.error("خطأ: محاولة دخول غير مصرح بها من IP: 192.168.1.1 (تم الحظر)")
-    st.success("تم الانتهاء من النسخ الاحتياطي اليومي بنجاح")
+    # 1. تحديث الأرقام العشوائية (المؤشرات)
+    users = 1500 + random.randint(-50, 50)
+    cpu_load = random.uniform(30.0, 75.0)
+    requests = random.randint(200, 800)
     
-    # تفاعل ملموس للحضور
-    st.subheader("⚙️ التحكم اليدوي")
-    if st.button("تحديث قاعدة البيانات الآن"):
-        with st.status("جاري التحديث...", expanded=True) as status:
-            st.write("فحص الاتصال...")
-            time.sleep(1)
-            st.write("مزامنة البيانات...")
-            time.sleep(1)
-            status.update(label="✅ اكتمل التحديث بنجاح!", state="complete", expanded=False)
+    with col1:
+        st.metric("المستخدمين الآن", f"{users}", f"{random.randint(-5, 5)}%")
+    with col2:
+        st.metric("تحميل المعالج (CPU)", f"{cpu_load:.1f}%", f"{random.uniform(-1, 1):.1f}%")
+    with col3:
+        st.metric("الطلبات/ثانية", f"{requests}", f"{random.randint(-20, 20)}")
+    with col4:
+        st.metric("حالة الـ Pipeline", "✅ Stable", "Normal")
 
-# تذييل الصفحة
-st.markdown("---")
-st.sidebar.write(f"Last Commit ID: {time.strftime('%H:%M:%S')}")
-# أضف هذا السطر في القائمة الجانبية (Sidebar)
-st.sidebar.success(f"آخر تحديث للنظام: {time.strftime('%H:%M:%S')}")
-st.sidebar.write("نسخة النظام: **v2.1.0**")
+    # 2. تحديث الرسم البياني (البورصة)
+    new_row = pd.DataFrame([[random.uniform(-1, 1) + st.session_state.data.iloc[-1]['Traffic']]], columns=['Traffic'])
+    st.session_state.data = pd.concat([st.session_state.data, new_row]).tail(20) # نحتفظ بآخر 20 نقطة فقط
+    chart_placeholder.line_chart(st.session_state.data)
+
+    # 3. محاكاة "إشعارات دخول الموظفين"
+    if random.random() > 0.8: # احتمالية 20% لظهور إشعار
+        names = ["أحمد", "سارة", "علي", "فاطمة"]
+        placeholder_alert.success(f"🔔 تم تسجيل دخول موظف جديد: {random.choice(names)}")
+    else:
+        placeholder_alert.empty()
+
+    time.sleep(2) # انتظر ثانيتين قبل التحديث القادم
+    st.rerun() # أعد تشغيل الكود لتحديث الواجهة
