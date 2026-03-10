@@ -8,20 +8,17 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
-    steps:
-    - name: Source Stage - Checkout Code
-      uses: actions/checkout@v4
+   steps:
+    - name: Checkout Code
+      [cite_start]uses: actions/checkout@v4 [cite: 34, 35]
 
-    - name: Build Stage - Set up environment
-      run: |
-        echo "Compiling code into executable artifacts..."
-        echo "Managing dependencies for release."
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
 
-    - name: Test Stage - Automated Testing
-      run: |
-        echo "Executing unit tests to validate code quality..."
-        echo "Checking functionality and performance."
+    - name: Install Pytest
+      run: pip install pytest
 
-    - name: Deploy Stage - Release
-      run: |
-        echo "Deployment successful! Faster and more reliable release achieved."
+    - name: Run Automated Unit Tests
+      [cite_start]run: pytest test_app.py [cite: 33, 41]
