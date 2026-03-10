@@ -71,4 +71,4 @@ with right_column:
 
 # تذييل الصفحة
 st.markdown("---")
-st.markdown(f"**إصدار النظام:** v2.4.0-Stable | **المطور:** [اسمك هنا] | **تاريخ النشر:** {time.strftime('%Y-%m-%d %H:%M')}")
+st.sidebar.write(f"Last Commit ID: {time.strftime('%H:%M:%S')}")
