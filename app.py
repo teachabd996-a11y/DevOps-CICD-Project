@@ -1,22 +1,45 @@
 import streamlit as st
+import pandas as pd
+import numpy as np
 
-st.set_page_config(page_title="DevOps Live Demo", page_icon="🚀")
+# إعدادات الصفحة
+st.set_page_config(page_title="DevOps Enterprise System", layout="wide")
 
-st.title("🚀 DevOps CI/CD Live Dashboard")
-st.write("هذا الموقع تم نشره تلقائياً باستخدام Pipeline احترافي!")
+# الهيدر
+st.title("🏢 نظام إدارة الموارد الذكي (Live Demo)")
+st.markdown("---")
 
-# إضافة تفاعل
-name = st.text_input("ما هو اسمك؟")
-if name:
-    st.success(f"أهلاً بك يا {name}! أنت الآن تشاهد قوة الأتمتة.")
+# القائمة الجانبية (Sidebar)
+st.sidebar.image("https://cdn-icons-png.flaticon.com/512/9438/9438069.png", width=100)
+st.sidebar.title("إعدادات النظام")
+status = st.sidebar.radio("حالة السيرفر:", ["تشغيل (Online)", "صيانة (Maintenance)"])
 
-st.sidebar.header("System Status")
-st.sidebar.info("Pipeline Status: ✅ Healthy")
-st.sidebar.info("Environment: Production (Cloud)")
+# الجزء الأول: بطاقات إحصائية (Metrics)
+col1, col2, col3 = st.columns(3)
+col1.metric("عدد المستخدمين", "1,250", "+12%")
+col2.metric("كفاءة النظام", "98.5%", "0.5%")
+col3.metric("الطلبات النشطة", "432", "-5%")
 
-# إضافة آلة حاسبة بسيطة كمثال ملموس
-st.subheader("Calculator Service")
-num1 = st.number_input("الرقم الأول", value=0)
-num2 = st.number_input("الرقم الثاني", value=0)
-if st.button("احسب المجموع"):
-    st.write(f"النتيجة هي: {num1 + num2}")
+st.markdown("---")
+
+# الجزء الثاني: رسم بياني تفاعلي
+st.subheader("📈 تحليل أداء العمليات (Real-time)")
+chart_data = pd.DataFrame(
+    np.random.randn(20, 3),
+    columns=['الإنتاج', 'المبيعات', 'الأرباح']
+)
+st.line_chart(chart_data)
+
+# الجزء الثالث: إضافة بيانات يدوية (الشيء الملموس)
+st.subheader("✍️ تسجيل دخول موظف جديد")
+with st.form("employee_form"):
+    name = st.text_input("اسم الموظف:")
+    dept = st.selectbox("القسم:", ["IT", "HR", "DevOps", "Finance"])
+    date = st.date_input("تاريخ البدء:")
+    submit = st.form_submit_button("إضافة للملحقات")
+    
+    if submit:
+        st.success(f"تم تسجيل {name} في قسم {dept} بنجاح عبر الـ Pipeline!")
+
+# تذييل الصفحة
+st.info(f"حالة النظام الحالية: {status} | تم النشر بواسطة GitHub Actions")
