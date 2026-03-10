@@ -1,4 +1,4 @@
-name: CI-CD-Pipeline
+name: Professional-DevOps-Pipeline
 
 on:
   push:
@@ -9,22 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Source Stage - Checkout Code
+    - name: 1. Source Stage (GitHub)
       uses: actions/checkout@v4
 
-    - name: Build Stage - Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: "3.10"
-
-    - name: Install Dependencies
+    - name: 2. Build Stage (Environment Setup)
       run: |
+        echo "Setting up Python environment..."
         python -m pip install --upgrade pip
         pip install pytest
 
-    - name: Test Stage - Run Automated Tests
-     # هذا السطر ينفذ الاختبارات الآلية التي ذكرتها في السلايد 33
-      run: pytest test_app.py
+    - name: 3. Test Stage (Automated Testing)
+      run: |
+        echo "Running Unit Tests as per slide 33..."
+        pytest test_app.py
 
-    - name: Deploy Stage - Release
-      run: echo "Deployment successful! High-quality software delivered faster."
+    - name: 4. Deploy Stage (AWS / Azure Simulation)
+      run: |
+        echo "Connecting to AWS CodePipeline..."
+        echo "Uploading artifacts to Amazon S3 Bucket..."
+        echo "Triggering Azure App Service Deployment..."
+        echo "DONE: Application is now LIVE on the Cloud!"
